@@ -20,7 +20,7 @@ export const socialLinks = [
         primary: false
     },
     {
-        href: "#",
+        href: "/docs/Sebastián Candia - Curriculum Vitae.pdf",
         icon: <FileText />,
         label: "CV",
         primary: true
