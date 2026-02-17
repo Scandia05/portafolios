@@ -2,50 +2,34 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Brain, Users, Lightbulb, Rocket, MessageSquare, RefreshCw } from 'lucide-react';
-import Image from 'next/image';
-import profilePic from '../public/profiles.jpg';
-
-// Componente de "Spec Card" para las habilidades blandas
-const SkillCard = ({ icon, text, delay }: { icon: any, text: string, delay: number }) => (
-    <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ delay, duration: 0.5 }}
-        viewport={{ once: true }}
-        className="flex flex-col items-center justify-center p-4 bg-slate-900/50 border border-slate-800 rounded-xl hover:bg-slate-800/80 hover:border-blue-500/30 transition-all duration-300 group text-center"
-    >
-        <div className="text-slate-500 mb-2 group-hover:text-blue-400 transition-colors">
-            {React.cloneElement(icon, { size: 24 })}
-        </div>
-        <span className="text-slate-300 text-sm font-medium leading-tight">{text}</span>
-    </motion.div>
-);
+import { aboutCapabilities } from '../../data/about';
+import { SkillCard } from '../ui/SkillCard';
+import { Section } from '../ui/Section';
 
 const About = () => (
-    <section id="about" className="relative z-10 h-full w-full flex flex-col justify-center items-center">
+    <Section id="about" centered className="h-full">
         {/* Scrollable Container */}
         <div className="h-full w-full overflow-y-auto no-scrollbar py-20 px-4 allow-scroll">
             <div className="max-w-6xl mx-auto">
                 <div className="grid md:grid-cols-[1fr_1.5fr] gap-12 md:gap-20 items-center">
 
-                    {/* 1. FOTO: Estilo "Digital ID" */}
+                    {/* 1. FOTO: Estilo "Circular Glow" */}
                     <motion.div
-                        initial={{ opacity: 0, scale: 0.9 }}
+                        initial={{ opacity: 0, scale: 0.5 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
-                        className="relative group max-w-sm mx-auto md:max-w-none"
+                        transition={{ duration: 0.5 }}
+                        className="relative group w-48 h-48 sm:w-64 sm:h-64 mx-auto"
                     >
-                        {/* Marco decorativo trasero con gradiente */}
-                        <div className="absolute -inset-1 bg-gradient-to-br from-blue-600 to-cyan-400 rounded-2xl opacity-30 group-hover:opacity-60 blur-lg transition-opacity duration-500"></div>
+                        {/* Glow animado pulsante */}
+                        <div className="absolute -inset-3 bg-gradient-to-r from-blue-600 via-cyan-400 to-blue-600 rounded-full opacity-50 blur-xl animate-pulse group-hover:opacity-80 transition duration-500"></div>
 
                         {/* Contenedor principal de la imagen */}
-                        <div className="relative aspect-[3/4] md:aspect-square w-full rounded-2xl overflow-hidden border border-slate-700 bg-slate-900 flex items-center justify-center">
-                            {/* IMAGEN DE DEBUG */}
+                        <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-slate-800 bg-slate-900 shadow-2xl">
                             <img
                                 src="/profiles.jpg"
-                                alt="Debug Profile"
-                                className="w-full h-full object-cover"
+                                alt="Sebastián Profile"
+                                className="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500"
                             />
                         </div>
                     </motion.div>
@@ -78,13 +62,9 @@ const About = () => (
                                 Core Capabilities
                             </h3>
                             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                                {/* Iconos de Lucide alineados con tus skills del CV */}
-                                <SkillCard icon={<Brain />} text="Pensamiento Analítico" delay={0.1} />
-                                <SkillCard icon={<Users />} text="Liderazgo Técnico" delay={0.2} />
-                                <SkillCard icon={<Rocket />} text="Innovación & I+D" delay={0.3} />
-                                <SkillCard icon={<Lightbulb />} text="Resolución Compleja" delay={0.4} />
-                                <SkillCard icon={<MessageSquare />} text="Comunicación Clara" delay={0.5} />
-                                <SkillCard icon={<RefreshCw />} text="Adaptabilidad" delay={0.6} />
+                                {aboutCapabilities.map((cap, index) => (
+                                    <SkillCard key={index} {...cap} />
+                                ))}
                             </div>
                         </div>
                     </div>
@@ -92,7 +72,7 @@ const About = () => (
                 </div>
             </div>
         </div>
-    </section>
+    </Section>
 );
 
 export default About;

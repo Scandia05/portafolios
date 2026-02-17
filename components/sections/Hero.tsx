@@ -2,25 +2,15 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Github, Linkedin, Mail, FileText, ChevronDown } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 
-const SocialButton = ({ href, icon, label, primary = false }: { href: string, icon: React.ReactElement<{ size?: number | string }>, label: string, primary?: boolean }) => (
-    <a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={`flex items-center gap-2 px-6 py-3 rounded-full font-medium transition-all duration-300 ${primary
-            ? 'bg-blue-600 text-white hover:bg-blue-500 hover:shadow-lg hover:shadow-blue-500/30'
-            : 'bg-slate-800/50 text-slate-300 border border-slate-700 hover:bg-slate-800 hover:text-white'
-            }`}
-    >
-        {React.cloneElement(icon, { size: 18 })}
-        {label}
-    </a>
-);
+import { socialLinks } from '../../data/social';
+import { SocialButton } from '../ui/SocialButton';
+
+import { Section } from '../ui/Section';
 
 const Hero = () => (
-    <section id="home" className="relative z-10 min-h-screen flex flex-col justify-center items-center text-center px-4">
+    <Section id="home" centered className="min-h-screen text-center px-4">
         <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -38,10 +28,9 @@ const Hero = () => (
             </p>
 
             <div className="flex flex-wrap gap-4 justify-center">
-                <SocialButton href="https://github.com/Scandia05" icon={<Github />} label="GitHub" />
-                <SocialButton href="https://www.linkedin.com/in/sebastián-candia-cabezas-7a068332b" icon={<Linkedin />} label="LinkedIn" />
-                <SocialButton href="mailto:sebastian.candia.201416@gmail.com" icon={<Mail />} label="Email" />
-                <SocialButton href="#" icon={<FileText />} label="CV" primary />
+                {socialLinks.map((link, index) => (
+                    <SocialButton key={index} {...link} />
+                ))}
             </div>
         </motion.div>
 
@@ -53,7 +42,7 @@ const Hero = () => (
         >
             <ChevronDown className="text-slate-600" size={32} />
         </motion.div>
-    </section>
+    </Section>
 );
 
 export default Hero;
