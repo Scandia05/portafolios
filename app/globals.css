@@ -19,8 +19,82 @@
   }
 }
 
+/* --- 1. BLOQUEO DE VENTANA (FRAME APP) --- */
+html,
 body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+
+  /* CRÍTICO: Esto quita el control al navegador y evita el scroll "libre" */
+  overflow: hidden;
+
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* --- 2. CONFIGURACIÓN DEL SCROLL MAGNÉTICO (Para usar en <main>) --- */
+@layer utilities {
+  .snap-container {
+    /* El contenedor DEBE medir exactamente la altura de la pantalla */
+    height: 100vh;
+    width: 100%;
+
+    /* El scroll ocurre SOLO dentro de este contenedor */
+    overflow-y: scroll;
+
+    /* mandatory: Fuerza el aterrizaje en la sección. No permite paradas intermedias. */
+    scroll-snap-type: y mandatory;
+
+    /* smooth: Transición suave tipo diapositiva */
+    scroll-behavior: smooth;
+  }
+
+  /* Utilidad para ocultar la barra de scroll en el contenedor */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+  }
+}
+
+/* --- 3. LIMPIEZA VISUAL GLOBAL --- */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+}
+
+/* --- 4. ANIMACIONES --- */
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: .7;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes background-pan {
+  from {
+    background-position: 0% 0%;
+  }
+
+  to {
+    background-position: -100% 100%;
+  }
+}
+
+.animate-pan {
+  animation: background-pan 60s linear infinite;
 }
